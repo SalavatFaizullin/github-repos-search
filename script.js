@@ -43,7 +43,7 @@ function createSelectedList() {
                 `<li class = 'selected-list__item'>
                         Name: ${itemsList[i].dataset.name}<br>
                         Owner: ${itemsList[i].dataset.owner}<br>
-                        Starts: ${itemsList[i].dataset.stars}
+                        Stars: ${itemsList[i].dataset.stars}
                         <button class = 'selected-list__remove-button'>X</button>
                     </li>`);
             searchWrapper.classList.remove('active');
