@@ -3,23 +3,23 @@ const input = searchWrapper.querySelector('input');
 const dropdownList = searchWrapper.querySelector('.search-input__dropdown-list');
 const selectedList = document.querySelector('.selected-list__content');
 
-input.addEventListener('keyup', debounce(getRepo, 400));
-
-selectedList.addEventListener('click', removeItem);
-
 async function getRepo(evt) {
-    return await fetch(`https://api.github.com/search/repositories?q=${evt.target.value}&per_page=5`, {
-    })
-        .then(response => {
-            return response.json();
+    if (evt.code === 'Space') { }
+    else if (evt.target.value === '') { searchWrapper.classList.remove('active') }
+    else {
+        return await fetch(`https://api.github.com/search/repositories?q=${evt.target.value}&per_page=5`, {
         })
-        .then(object => {
-            createSuggList(object.items);
-            createSelectedList();
-        })
+            .then(response => {
+                return response.json();
+            })
+            .then(object => {
+                createDropdownList(object.items);
+                createSelectedList();
+            })
+    }
 }
 
-function createSuggList(array) {
+function createDropdownList(array) {
     searchWrapper.classList.add('active');
     dropdownList.innerHTML = '';
     for (let elem of array) {
@@ -66,3 +66,7 @@ function debounce(fn, debounceTime) {
         }, debounceTime);
     }
 }
+
+input.addEventListener('keyup', debounce(getRepo, 400));
+
+selectedList.addEventListener('click', removeItem);
